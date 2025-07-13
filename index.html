@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>រៀនធ្វើម្ហូប - Learn Cooking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Khmer OS', Arial, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #F2F0EA 0%, #FFF8E7 100%);
+            color: #2C1810;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #FFF8E7;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #FFF8E7;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(255, 107, 53, 0.8), rgba(247, 147, 30, 0.8)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23FFB84D" width="1200" height="600"/><circle fill="%23FF6B35" cx="200" cy="150" r="80" opacity="0.3"/><circle fill="%23F7931E" cx="800" cy="300" r="120" opacity="0.3"/><circle fill="%23FFD93D" cx="1000" cy="100" r="60" opacity="0.3"/></svg>');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            background: #FFD93D;
+            color: #2C1810;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 6px 20px rgba(255, 217, 61, 0.4);
+        }
+
+        .cta-button:hover {
+            background: #FFC107;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 217, 61, 0.6);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            color: #FF6B35;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #FFD93D, #F7931E);
+            border-radius: 2px;
+        }
+
+        /* Recipe Cards */
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .recipe-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.25);
+        }
+
+        .recipe-image {
+            height: 200px;
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        .recipe-content {
+            padding: 1.5rem;
+        }
+
+        .recipe-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2C1810;
+            margin-bottom: 0.5rem;
+        }
+
+        .recipe-description {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .recipe-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .difficulty {
+            background: #FFD93D;
+            color: #2C1810;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+
+        /* Learning Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature h3 {
+            color: #FF6B35;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+        }
+
+        .close:hover {
+            color: #FF6B35;
+        }
+
+        .ingredients-list {
+            background: #FFF8E7;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+        }
+
+        .ingredients-list h4 {
+            color: #FF6B35;
+            margin-bottom: 1rem;
+        }
+
+        .ingredients-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .ingredients-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .ingredients-list li:before {
+            content: "🥄 ";
+            margin-right: 0.5rem;
+        }
+
+        .steps {
+            margin-top: 2rem;
+        }
+
+        .step {
+            background: #F8F9FA;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            border-left: 4px solid #FF6B35;
+        }
+
+        /* Footer */
+        footer {
+            background: #2C1810;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            main {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🍳 ម្ហូបខ្មែរ</div>
+            <ul class="nav-links">
+                <li><a href="#home">ទំព័រដើម</a></li>
+                <li><a href="#recipes">រូបមន្តម្ហូប</a></li>
+                <li><a href="#learn">រៀនធ្វើ</a></li>
+                <li><a href="#about">អំពីយើង</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <h1>រៀនធ្វើម្ហូបខ្មែរ</h1>
+        <p>ស្វែងយល់ពីសម្ងាត់នៃការធ្វើម្ហូបខ្មែរដ៏ឆ្ងាញ់ និងរៀនបច្ចេកទេសធ្វើម្ហូបពីអ្នកជំនាញ</p>
+        <a href="#recipes" class="cta-button">ចាប់ផ្តើមរៀន</a>
+    </section>
+
+    <main>
+        <section class="section" id="recipes">
+            <h2>រូបមន្តម្ហូបពេញនិយម</h2>
+            <div class="recipe-grid">
+                <div class="recipe-card" onclick="openRecipe('amok')">
+                    <div class="recipe-image">🐟</div>
+                    <div class="recipe-content">
+                        <div class="recipe-title">អាម៉ុកត្រី</div>
+                        <div class="recipe-description">ម្ហូបប្រពៃណីខ្មែរដ៏ល្បីល្បាញ ធ្វើពីត្រីនិងគ្រឿងទេសក្រអូប</div>
+                        <div class="recipe-meta">
+                            <span>⏱️ ៤៥ នាទី</span>
+                            <span class="difficulty">មធ្យម</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recipe-card" onclick="openRecipe('lochlac')">
+                    <div class="recipe-image">🍜</div>
+                    <div class="recipe-content">
+                        <div class="recipe-title">លុកឡាក់</div>
+                        <div class="recipe-description">គុយទាវមានរសជាតិឆ្ងាញ់ ជាមួយសាច់គោនិងបន្លែស្រស់</div>
+                        <div class="recipe-meta">
+                            <span>⏱️ ៣០ នាទី</span>
+                            <span class="difficulty">ងាយ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recipe-card" onclick="openRecipe('kuyteav')">
+                    <div class="recipe-image">🍲</div>
+                    <div class="recipe-content">
+                        <div class="recipe-title">គុយទាវ</div>
+                        <div class="recipe-description">ស៊ុបមីដ៏ពេញនិយមសម្រាប់អាហារពេលព្រឹក</div>
+                        <div class="recipe-meta">
+                            <span>⏱️ ២០ នាទី</span>
+                            <span class="difficulty">ងាយ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recipe-card" onclick="openRecipe('samlar')">
+                    <div class="recipe-image">🥘</div>
+                    <div class="recipe-content">
+                        <div class="recipe-title">សម្លម្ជូរ</div>
+                        <div class="recipe-description">ស៊ុបជូរឆ្ងាញ់ជាមួយត្រីនិងបន្លែ</div>
+                        <div class="recipe-meta">
+                            <span>⏱️ ៣៥ នាទី</span>
+                            <span class="difficulty">មធ្យម</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="learn">
+            <h2>មុខងារសិក្សា</h2>
+            <div class="features">
+                <div class="feature fade-in">
+                    <div class="feature-icon">📚</div>
+                    <h3>រូបមន្តលម្អិត</h3>
+                    <p>រៀនពីរូបមន្តម្ហូបខ្មែរជាច្រើនប្រភេទ ជាមួយនឹងការណែនាំលម្អិត</p>
+                </div>
+                <div class="feature fade-in">
+                    <div class="feature-icon">🎥</div>
+                    <h3>វីដេអូបង្រៀន</h3>
+                    <p>មើលវីដេអូបង្រៀនដើម្បីយល់ពីបច្ចេកទេសធ្វើម្ហូប</p>
+                </div>
+                <div class="feature fade-in">
+                    <div class="feature-icon">👨‍🍳</div>
+                    <h3>ជំនួយពីអ្នកជំនាញ</h3>
+                    <p>ទទួលបានការណែនាំពីអ្នកចុងភៅដ៏មានបទពិសោធន៍</p>
+                </div>
+                <div class="feature fade-in">
+                    <div class="feature-icon">📱</div>
+                    <h3>ប្រើបានលើទូរស័ព្ទ</h3>
+                    <p>រៀននៅគ្រប់ទីកន្លែង ជាមួយនឹងការរចនាដែលងាយស្រួលប្រើ</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Recipe Modal -->
+    <div id="recipeModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; ២០២៥ រៀនធ្វើម្ហូបខ្មែរ - រក្សាសិទ្ធិគ្រប់យ៉ាង</p>
+        <p>ធ្វើឡើងដោយក្តីស្រឡាញ់ចំពោះម្ហូបខ្មែរ 🇰🇭</p>
+    </footer>
+
+    <script>
+        // Recipe data
+        const recipes = {
+            amok: {
+                title: "អាម៉ុកត្រី",
+                image: "🐟",
+                time: "៤៥ នាទី",
+                difficulty: "មធ្យម",
+                ingredients: [
+                    "ត្រីស្រស់ ៥០០ ក្រាម",
+                    "ទឹកកកដូង ២០០ មីលីលីត្រ",
+                    "ក្រឿងអាម៉ុក ២ ស្លាបព្រាបាយ",
+                    "ស្លឹកចេក",
+                    "ស្ពៃ ២ ដើម",
+                    "ម្ទេសក្រហម ២ គ្រាប់",
+                    "ប្រាំងស្រស់ ១ ស្លាបព្រាបាយ"
+                ],
+                steps: [
+                    "កាត់ត្រីជាដុំតូចៗ ហើយលាបក្រឿងអាម៉ុក",
+                    "ចាក់ទឹកកកដូងបន្តិចម្តងៗ រហូតដល់ក្រាស់ល្មម",
+                    "ដាក់ត្រីចូលក្នុងល្បាយ រួចកូរឱ្យសព្វ",
+                    "ដាក់ចូលក្នុងស្លឹកចេក ហើយចំហុយ ២០ នាទី",
+                    "តុបតែងជាមួយស្ពៃនិងម្ទេសក្រហម"
+                ]
+            },
+            lochlac: {
+                title: "លុកឡាក់",
+                image: "🍜",
+                time: "៣០ នាទី",
+                difficulty: "ងាយ",
+                ingredients: [
+                    "មីលុកឡាក់ ២០០ ក្រាម",
+                    "សាច់គោ ១០០ ក្រាម",
+                    "ស្ពៃចិន ៥០ ក្រាម",
+                    "ស្លឹកសាឡាត់ ៥០ ក្រាម",
+                    "ទឹកស៊ុបគោ ៥០០ មីលីលីត្រ",
+                    "ខ្ទឹមបារាំង ២ ក្បាល",
+                    "ប្រេងឆា ២ ស្លាបព្រាបាយ"
+                ],
+                steps: [
+                    "ដាំទឹកឱ្យពុះ ហើយដាក់មីចូល",
+                    "ចៀនសាច់គោជាមួយខ្ទឹមបារាំង",
+                    "ដាក់ទឹកស៊ុបចូល រហូតដល់ពុះ",
+                    "ដាក់មីចូលក្នុងចាន ហើយចាក់ទឹកស៊ុប",
+                    "តុបតែងជាមួយបន្លែស្រស់"
+                ]
+            },
+            kuyteav: {
+                title: "គុយទាវ",
+                image: "🍲",
+                time: "២០ នាទី",
+                difficulty: "ងាយ",
+                ingredients: [
+                    "មីគុយទាវ ២០០ ក្រាម",
+                    "សាច់ជ្រូក ១០០ ក្រាម",
+                    "ទឹកស៊ុប ៦០០ មីលីលីត្រ",
+                    "ស្ពៃចិន ៣០ ក្រាម",
+                    "ខ្ទឹមស ២ ក្បាល",
+                    "ទឹកត្រី ១ ស្លាបព្រាបាយ",
+                    "ម្រេចកាយ តាមចិត្ត"
+                ],
+                steps: [
+                    "ដាំទឹកស៊ុបឱ្យពុះ",
+                    "ដាក់សាច់ជ្រូកចូល ឱ្យឆ្អិន",
+                    "ដាក់មីចូល ចំអុះ ២-៣ នាទី",
+                    "ដាក់ទឹកត្រីនិងម្រេចកាយ",
+                    "ចាក់ចូលចាន តុបតែងជាមួយស្ពៃនិងខ្ទឹមស"
+                ]
+            },
+            samlar: {
+                title: "សម្លម្ជូរ",
+                image: "🥘",
+                time: "៣៥ នាទី",
+                difficulty: "មធ្យម",
+                ingredients: [
+                    "ត្រីស្រស់ ៣០០ ក្រាម",
+                    "ម្ជូរ ២ ស្លាបព្រាបាយ",
+                    "ដំឡូងបារាំង ២ គ្រាប់",
+                    "ផ្កាស្ពៃ ១០០ ក្រាម",
+                    "ស្លឹកស្ពៃ ៥០ ក្រាម",
+                    "ទឹកត្រី ២ ស្លាបព្រាបាយ",
+                    "ទឹក ៨០០ មីលីលីត្រ"
+                ],
+                steps: [
+                    "ដាំទឹកឱ្យពុះ ហើយដាក់ម្ជូរ",
+                    "ដាក់ត្រីនិងដំឡូងបារាំង",
+                    "ចំអុះ ១៥ នាទី រហូតដល់ទន់",
+                    "ដាក់ផ្កាស្ពៃនិងស្លឹកស្ពៃ",
+                    "ដាក់ទឹកត្រី រសជាតិតាមចិត្ត"
+                ]
+            }
+        };
+
+        // Modal functionality
+        const modal = document.getElementById('recipeModal');
+        const modalContent = document.getElementById('modalContent');
+        const closeBtn = document.getElementsByClassName('close')[0];
+
+        function openRecipe(recipeId) {
+            const recipe = recipes[recipeId];
+            if (!recipe) return;
+
+            modalContent.innerHTML = `
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">${recipe.image}</div>
+                    <h2 style="color: #FF6B35; margin-bottom: 0.5rem;">${recipe.title}</h2>
+                    <div style="color: #666;">
+                        <span>⏱️ ${recipe.time}</span> | 
+                        <span class="difficulty" style="background: #FFD93D; color: #2C1810; padding: 0.3rem 0.8rem; border-radius: 15px; font-weight: bold;">${recipe.difficulty}</span>
+                    </div>
+                </div>
+
+                <div class="ingredients-list">
+                    <h4>គ្រឿងផ្សំ:</h4>
+                    <ul>
+                        ${recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="steps">
+                    <h4 style="color: #FF6B35; margin-bottom: 1rem;">វិធីធ្វើ:</h4>
+                    ${recipe.steps.map((step, index) => `
+                        <div class="step">
+                            <strong>ជំហាន ${index + 1}:</strong> ${step}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature, .recipe-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
