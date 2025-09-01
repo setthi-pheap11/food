@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: food-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: food-web
+  template:
+    metadata:
+      labels:
+        app: food-web
+    spec:
+      containers:
+        - name: food-web
+          image: setthi001/food:01
+          ports:
+            - containerPort: 80
